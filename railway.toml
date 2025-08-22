@@ -1,5 +1,6 @@
 [build]
 builder = "NIXPACKS"
+buildCommand = "cd backend && npm install"
 
 [deploy]
 startCommand = "cd backend && npm start"
@@ -7,3 +8,6 @@ healthcheckPath = "/"
 healthcheckTimeout = 300
 restartPolicyType = "ON_FAILURE"
 restartPolicyMaxRetries = 10
+
+[variables]
+NODE_VERSION = "18"
