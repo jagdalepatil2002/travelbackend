@@ -1,4 +1,9 @@
 
+// API Configuration - automatically detects environment
+const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+  ? 'http://localhost:5000'  // Local development
+  : 'https://your-railway-app.railway.app';  // Production - Update this after deployment
+
 const app = document.getElementById('app');
 app.innerHTML = `
   <header class="header">
@@ -107,7 +112,7 @@ async function searchPlaces() {
   showLoading();
   
   try {
-    const res = await fetch('http://localhost:5000/api/search', {
+    const res = await fetch(`${API_BASE_URL}/api/search`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ location })
@@ -231,7 +236,7 @@ async function showDetails(place, location, places) {
   document.body.style.overflow = 'hidden';
   
   try {
-    const res = await fetch('http://localhost:5000/api/details', {
+    const res = await fetch(`${API_BASE_URL}/api/details`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ location, name: place.name })

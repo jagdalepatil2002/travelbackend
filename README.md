@@ -146,6 +146,59 @@ Each attraction includes:
 - Versioned cache keys for prompt updates
 - Efficient image enrichment with fallbacks
 
+## Railway Deployment
+
+This project is configured for easy deployment to Railway.
+
+### Step 1: Create Railway Account
+1. Go to [Railway.app](https://railway.app)
+2. Sign up using your GitHub account
+
+### Step 2: Deploy Backend
+1. **Connect GitHub Repository**:
+   - Click "New Project" → "Deploy from GitHub repo"
+   - Select this repository (`travelbackend`)
+
+2. **Configure Environment Variables**:
+   ```
+   GEMINI_API_KEY=your_gemini_api_key_here
+   DATABASE_URL=postgresql://user:pass@host:port/db  (Railway will provide this)
+   PORT=3000
+   ```
+
+3. **Add PostgreSQL Database**:
+   - In your Railway project, click "Add Service" → "Database" → "PostgreSQL"
+   - Railway will automatically provide the `DATABASE_URL`
+
+### Step 3: Update Frontend
+1. After deployment, Railway will provide a URL like: `https://your-app-name.railway.app`
+2. Update `frontend/app.js` line 2:
+   ```javascript
+   const API_BASE_URL = 'https://your-railway-app.railway.app';
+   ```
+
+### Step 4: Deploy Frontend
+**Option A: Deploy on Railway**
+- Create a separate Railway service for the frontend
+- Connect the same GitHub repo but deploy from `/frontend` folder
+
+**Option B: Deploy on Netlify/Vercel (Recommended)**
+- Connect your GitHub repo to Netlify or Vercel
+- Set build directory to `frontend`
+- Update the API_BASE_URL in `app.js` with your Railway backend URL
+
+### Environment Variables for Railway
+| Variable | Description | Required |
+|----------|-------------|----------|
+| `GEMINI_API_KEY` | Google Gemini AI API key | Yes |
+| `DATABASE_URL` | PostgreSQL connection (auto-provided by Railway) | Yes |
+| `PORT` | Server port (auto-set by Railway) | No |
+
+### Railway Configuration Files
+- `railway.toml` - Railway deployment configuration
+- `backend/package.json` - Node.js version and scripts
+- Health check endpoint available at `/`
+
 ## Contributing
 
 1. Fork the repository

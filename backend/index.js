@@ -34,6 +34,20 @@ app.get('/api/ping', async (req, res) => {
   }
 });
 
+// Health check endpoint for Railway
+app.get('/', (req, res) => {
+  res.json({ 
+    message: 'TravelAI Backend API is running!',
+    status: 'healthy',
+    version: '1.0.0',
+    endpoints: [
+      'POST /api/search - Search for places in a city',
+      'POST /api/details - Get detailed information about a place',
+      'GET /api/ping - Database health check'
+    ]
+  });
+});
+
 
 
 // Helper: fetch images from multiple sources
